@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Pal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: green;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header img {
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            margin-right: 15px;
+        }
+        .header h1 {
+            color: white;
+            margin: 0;
+        }
+        .main {
+            display: flex;
+            flex: 1;
+        }
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            background-color: #333;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .sidebar button:hover {
+            background-color: #ddd;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .chatbox, .inbox, .report {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .chatbox textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .inbox form, .report form {
+            display: flex;
+            flex-direction: column;
+        }
+        .inbox input, .report input, .inbox textarea, .report textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        .inbox button, .report button {
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .inbox button:hover, .report button:hover {
+            background-color: darkgreen;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .nav-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: white;
+            color: green;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .nav-buttons button:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img id="logo" src="profile_picture.jpg" alt="Profile Picture">
+        <h1>Study PAL : Peer-Assisted Learning</h1>
+    </div>
+    
+    <div class="nav-buttons">
+        <button onclick="window.location.href='profile.html'">Profile</button>
+        <button onclick="window.location.href='login.html'">Sign Out</button>
+    </div>
+
+    <div class="main">
+        <div class="sidebar">
+            <button onclick="showSection('chatbox')">Chatbox</button>
+            <button onclick="showSection('inbox')">Inbox</button>
+            <button onclick="showSection('report')">Report</button>
+        </div>
+
+        <div class="content">
+            <div id="chatbox" class="chatbox">
+                <h2>Chatbox</h2>
+                <textarea placeholder="Type your message here..."></textarea>
+            </div>
+            <div id="inbox" class="inbox" style="display: none;">
+                <h2>Inbox</h2>
+                <form id="sendMessageForm">
+                    <input type="text" id="recipientId" name="recipientId" placeholder="Recipient ID" required>
+                    <textarea id="messageContent" name="messageContent" placeholder="Type your message here..." required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+            <div id="report" class="report" style="display: none;">
+                <h2>Report User</h2>
+                <form id="reportForm">
+                    <input type="text" id="reportUserId" name="reportUserId" placeholder="User ID to Report" required>
+                    <textarea id="reportReason" name="reportReason" placeholder="Reason for Report" required></textarea>
+                    <button type="submit">Submit Report</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content > div');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const logo = document.getElementById('logo');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (currentUser && currentUser.photo) {
+                logo.src = currentUser.photo;
+            }
+
+            const sendMessageForm = document.getElementById('sendMessageForm');
+            sendMessageForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const recipientId = document.getElementById('recipientId').value;
+                const messageContent = document.getElementById('messageContent').value;
+
+                let inboxMessages = JSON.parse(localStorage.getItem('inboxMessages')) || [];
+                inboxMessages.push({ senderId: currentUser.id, recipientId, messageContent, timestamp: new Date().toLocaleString() });
+                localStorage.setItem('inboxMessages', JSON.stringify(inboxMessages));
+
+                alert('Message sent successfully!');
+                sendMessageForm.reset();
+            });
+
+            const reportForm = document.getElementById('reportForm');
+            reportForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const reportUserId = document.getElementById('reportUserId').value;
+                const reportReason = document.getElementById('reportReason').value;
+
+                let reports = JSON.parse(localStorage.getItem('reports')) || [];
+                reports.push({ reporterId: currentUser.id, reportUserId, reportReason, timestamp: new Date().toLocaleString() });
+                localStorage.setItem('reports', JSON.stringify(reports));
+
+                alert('Report submitted successfully!');
+                reportForm.reset();
+            });
+        });
+    </script>
+
+</body>
+</html>

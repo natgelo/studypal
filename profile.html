@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Study Pal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .header {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .header a {
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .container h2 {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="home.html">Home</a>
+    </div>
+    <div class="container">
+        <h2>Profile</h2>
+        <form id="profileForm">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required disabled>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="gradeLevel">Grade Level</label>
+                <input type="text" id="gradeLevel" name="gradeLevel" required>
+            </div>
+            <div class="input-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            <div class="input-group">
+                <label for="birthdate">Birthdate</label>
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+            <div class="input-group">
+                <label for="photo">Profile Picture</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+            </div>
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const profileForm = document.getElementById('profileForm');
+
+            if (currentUser) {
+                document.getElementById('username').value = currentUser.username;
+                document.getElementById('email').value = currentUser.email;
+                document.getElementById('password').value = currentUser.password;
+                document.getElementById('gradeLevel').value = currentUser.gradeLevel || '';
+                document.getElementById('address').value = currentUser.address || '';
+                document.getElementById('birthdate').value = currentUser.birthdate || '';
+            }
+
+            profileForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const updatedUser = {
+                    username: currentUser.username,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    gradeLevel: document.getElementById('gradeLevel').value,
+                    address: document.getElementById('address').value,
+                    birthdate: document.getElementById('birthdate').value,
+                    photo: currentUser.photo
+                };
+
+                if (document.getElementById('photo').files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        updatedUser.photo = e.target.result;
+                        saveUser(updatedUser);
+                    };
+                    reader.readAsDataURL(document.getElementById('photo').files[0]);
+                } else {
+                    saveUser(updatedUser);
+                }
+            });
+
+            function saveUser(user) {
+                let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                registeredUsers = registeredUsers.map(u => (u.username === user.username ? user : u));
+                localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                alert('Profile updated successfully!');
+                window.location.reload();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Study Pal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: green;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .header h1 {
+            color: white;
+            margin: 0;
+        }
+        .main {
+            display: flex;
+            flex: 1;
+        }
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            background-color: #333;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .sidebar button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: white;
+            color: #333;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        .sidebar button:hover {
+            background-color: #ddd;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        .chatbox, .inbox, .log-activity, .edit-user-form, .reports {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .chatbox textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .nav-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: white;
+            color: green;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .nav-buttons button:hover {
+            background-color: #ddd;
+        }
+        .inbox-item {
+            margin-bottom: 20px;
+        }
+        .inbox-item img {
+            max-width: 100px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .inbox-item .info {
+            margin-bottom: 10px;
+        }
+        .inbox-item button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .inbox-item .decline-button {
+            background-color: red;
+        }
+        .log-activity ul, .reports ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .log-activity li, .reports li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .edit-user-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .edit-user-form button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .edit-user-form button:hover {
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Admin Dashboard</h1>
+    </div>
+    
+    <div class="nav-buttons">
+        <button onclick="window.location.href='login.html'">Sign Out</button>
+    </div>
+
+    <div class="main">
+        <div class="sidebar">
+            <button onclick="showSection('chatbox')">Chatbox</button>
+            <button onclick="showSection('inbox')">Inbox</button>
+            <button onclick="showSection('log-activity')">Log Activity</button>
+            <button onclick="showSection('edit-user')">Edit User</button>
+            <button onclick="showSection('reports')">Reports</button>
+        </div>
+
+        <div class="content">
+            <div id="chatbox" class="chatbox">
+                <h2>Chatbox</h2>
+                <textarea placeholder="Type your message here..."></textarea>
+            </div>
+            <div id="inbox" class="inbox" style="display: none;">
+                <h2>Inbox</h2>
+                <div id="inbox-content">
+                    <p>No new messages.</p>
+                </div>
+            </div>
+            <div id="log-activity" class="log-activity" style="display: none;">
+                <h2>Log Activity</h2>
+                <ul id="log-list">
+                    <!-- Login logs will be appended here -->
+                </ul>
+            </div>
+            <div id="edit-user" class="edit-user-form" style="display: none;">
+                <h2>Edit User</h2>
+                <form id="editUserForm">
+                    <p><strong>ID:</strong></p>
+                    <input type="text" id="editUserId" name="editUserId" required>
+                    <p><strong>Name:</strong></p>
+                    <input type="text" id="editUserName" name="editUserName" required>
+                    <p><strong>Email:</strong></p>
+                    <input type="email" id="editUserEmail" name="editUserEmail" required>
+                    <p><strong>Password:</strong></p>
+                    <input type="password" id="editUserPassword" name="editUserPassword" required>
+                    <p><strong>Profile Picture:</strong></p>
+                    <input type="file" id="editUserPhoto" name="editUserPhoto" accept="image/*">
+                    <button type="submit">Save Changes</button>
+                </form>
+            </div>
+            <div id="reports" class="reports" style="display: none;">
+                <h2>Reports</h2>
+                <ul id="report-list">
+                    <!-- Reports will be appended here -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content > div');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const inboxContent = document.getElementById('inbox-content');
+            const logList = document.getElementById('log-list');
+            const reportList = document.getElementById('report-list');
+
+            // Load inbox messages (photos and user info)
+            const inboxMessages = JSON.parse(localStorage.getItem('inboxMessages')) || [];
+            if (inboxMessages.length > 0) {
+                inboxContent.innerHTML = '';
+                inboxMessages.forEach((message, index) => {
+                    const inboxItem = document.createElement('div');
+                    inboxItem.className = 'inbox-item';
+
+                    const info = document.createElement('div');
+                    info.className = 'info';
+                    info.innerHTML = `<strong>Username:</strong> ${message.username}<br>
+                                      <strong>Email:</strong> ${message.email}<br>
+                                      <strong>${message.type === 'student' ? 'Student ID' : 'Mentee ID'}:</strong> ${message.additionalID}<br>
+                                      <strong>Grade Level:</strong> ${message.gradeLevel}<br>
+                                      <strong>Address:</strong> ${message.address}<br>
+                                      <strong>Birthdate:</strong> ${message.birthdate}<br>`;
+                    inboxItem.appendChild(info);
+
+                    const img = document.createElement('img');
+                    img.src = message.photo;
+                    inboxItem.appendChild(img);
+
+                    const approveButton = document.createElement('button');
+                    approveButton.textContent = 'Approve';
+                    approveButton.onclick = function() {
+                        alert(`User ${message.username} approved.`);
+                        // Save user credentials to registered users
+                        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                        registeredUsers.push({ username: message.username, email: message.email, password: message.password, gradeLevel: message.gradeLevel, address: message.address, birthdate: message.birthdate, type: message.type, additionalID: message.additionalID, photo: message.photo });
+                        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+                        // Remove the message from local storage
+                        inboxMessages.splice(index, 1);
+                        localStorage.setItem('inboxMessages', JSON.stringify(inboxMessages));
+                        inboxItem.remove();
+                    };
+                    inboxItem.appendChild(approveButton);
+
+                    const declineButton = document.createElement('button');
+                    declineButton.textContent = 'Decline';
+                    declineButton.className = 'decline-button';
+                    declineButton.onclick = function() {
+                        alert(`User ${message.username} declined.`);
+                        // Remove the message from local storage
+                        inboxMessages.splice(index, 1);
+                        localStorage.setItem('inboxMessages', JSON.stringify(inboxMessages));
+                        inboxItem.remove();
+                    };
+                    inboxItem.appendChild(declineButton);
+
+                    inboxContent.appendChild(inboxItem);
+                });
+            }
+
+            // Load login logs
+            const loginLogs = JSON.parse(localStorage.getItem('loginLogs')) || [];
+            loginLogs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)); // Sort logs by timestamp in descending order
+            loginLogs.forEach(log => {
+                const logItem = document.createElement('li');
+                logItem.textContent = `${log.timestamp} - Username: ${log.username}`;
+                logList.appendChild(logItem);
+            });
+
+            // Load reports
+            const reports = JSON.parse(localStorage.getItem('reports')) || [];
+            reports.forEach(report => {
+                const reportItem = document.createElement('li');
+                reportItem.textContent = `${report.timestamp} - Reporter ID: ${report.reporterId}, Reported User ID: ${report.reportUserId}, Reason: ${report.reportReason}`;
+                reportList.appendChild(reportItem);
+            });
+
+            // Edit user form logic
+            const editUserForm = document.getElementById('editUserForm');
+            const editUserId = document.getElementById('editUserId');
+            const editUserName = document.getElementById('editUserName');
+            const editUserEmail = document.getElementById('editUserEmail');
+            const editUserPassword = document.getElementById('editUserPassword');
+            const editUserPhoto = document.getElementById('editUserPhoto');
+
+            editUserForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                const users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+                const user = users.find(u => u.username === editUserId.value);
+
+                if (user) {
+                    user.name = editUserName.value;
+                    user.email = editUserEmail.value;
+                    user.password = editUserPassword.value;
+
+                    if (editUserPhoto.files[0]) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            user.photo = e.target.result;
+                            updateUser(users);
+                        };
+                        reader.readAsDataURL(editUserPhoto.files[0]);
+                    } else {
+                        updateUser(users);
+                    }
+                } else {
+                    alert('User not found');
+                }
+            });
+
+            function updateUser(users) {
+                localStorage.setItem('registeredUsers', JSON.stringify(users));
+                alert('User updated successfully!');
+                window.location.reload();
+            }
+        });
+    </script>
+</body>
+</html>
