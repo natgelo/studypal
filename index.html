@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login - Study Pal</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            background-color: #f4f4f9;
+
+            background-image: url('loginbg1.jpg'); 
+
+            background-size: cover;
+
+            background-position: center;
+
+            margin: 0;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            height: 100vh;
+
+        }
+
+        .container {
+
+            background-color: white;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            width: 300px;
+
+            text-align: center;
+
+        }
+
+        .container h2 {
+
+            margin-bottom: 20px;
+
+        }
+
+        .input-group {
+
+            margin-bottom: 15px;
+
+            text-align: left;
+
+        }
+
+        label {
+
+            display: block;
+
+            margin-bottom: 5px;
+
+            font-weight: bold;
+
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 10px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 4px;
+
+        }
+
+        button {
+
+            width: 100%;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 4px;
+
+            background-color: green;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-bottom: 10px;
+
+        }
+
+        button:hover {
+
+            background-color: darkgreen;
+
+        }
+
+        .signup-link, .back-link {
+
+            margin-top: 10px;
+
+        }
+
+        .signup-link a, .back-link a {
+
+            color: green;
+
+            text-decoration: none;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Login</h2>
+
+        <div id="loginTypeSelection">
+
+            <button onclick="showLoginForm('student')">Student Login</button>
+
+            <button onclick="showLoginForm('mentee')">Mentee Login</button>
+
+        </div>
+
+        <form id="loginForm" style="display: none;">
+
+            <div class="input-group">
+
+                <label for="username">Username</label>
+
+                <input type="text" id="username" name="username" required>
+
+            </div>
+
+            <div class="input-group">
+
+                <label for="password">Password</label>
+
+                <input type="password" id="password" name="password" required>
+
+            </div>
+
+            <button type="submit" id="loginButton">Login</button>
+
+        </form>
+
+        <div class="signup-link">
+
+            <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+
+        </div>
+
+        <div class="back-link">
+
+            <p><a href="login.html">Back</a></p>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        function showLoginForm(type) {
+
+            const loginTypeSelection = document.getElementById('loginTypeSelection');
+
+            const loginForm = document.getElementById('loginForm');
+
+            const loginButton = document.getElementById('loginButton');
+
+
+
+            loginTypeSelection.style.display = 'none';
+
+            loginForm.style.display = 'block';
+
+
+
+            if (type === 'student') {
+
+                loginButton.textContent = 'Login as Student';
+
+            } else if (type === 'mentee') {
+
+                loginButton.textContent = 'Login as Mentee';
+
+            }
+
+        }
+
+
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+
+            event.preventDefault();
+
+
+
+            const username = document.getElementById('username').value;
+
+            const password = document.getElementById('password').value;
+
+            const loginButton = document.getElementById('loginButton').textContent;
+
+
+
+            const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+            const user = registeredUsers.find(user => user.username === username && user.password === password);
+
+
+
+            if (user || (username === 'admin' && password === 'admin1311177')) {
+
+                // Save current user to local storage
+
+                localStorage.setItem('currentUser', JSON.stringify({ username, password }));
+
+
+
+                // Record login activity
+
+                const currentDateTime = new Date().toLocaleString();
+
+                let loginLogs = JSON.parse(localStorage.getItem('loginLogs')) || [];
+
+                loginLogs.push({ username, timestamp: currentDateTime });
+
+                localStorage.setItem('loginLogs', JSON.stringify(loginLogs));
+
+
+
+                alert('Login successful!');
+
+                if (username === 'admin' && password === 'admin1311177') {
+
+                    window.location.href = 'admin.html'; // Redirect to admin page
+
+                } else if (loginButton === 'Login as Student') {
+
+                    window.location.href = 'home.html'; // Redirect to home page for students
+
+                } else if (loginButton === 'Login as Mentee') {
+
+                    window.location.href = 'mentee.html'; // Redirect to home page for mentees (you need to create this page)
+
+                }
+
+            } else {
+
+                alert('Invalid username or password.');
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
