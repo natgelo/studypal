@@ -118,7 +118,6 @@
             const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
             const user = registeredUsers.find(user => user.username === username && user.password === password);
 
-            if (user || (username === 'admin' && password === 'password')) {
             if (user || (username === 'user' && password === 'password')) {
                 // Save current user to local storage
                 localStorage.setItem('currentUser', JSON.stringify({ username, password }));
@@ -130,9 +129,7 @@
                 localStorage.setItem('loginLogs', JSON.stringify(loginLogs));
 
                 alert('Login successful!');
-                if (username === 'admin' && password === 'password') {
-                    window.location.href = 'admin.html'; // Redirect to admin page
-                } else if (username === 'user' && password === 'password') {
+                if (username === 'user' && password === 'password') {
                     window.location.href = 'home.html'; // Redirect to home page
                 } else if (loginButton === 'Login as Student') {
                     window.location.href = 'home.html'; // Redirect to home page for students
@@ -143,6 +140,14 @@
                 alert('Invalid username or password.');
             }
         });
+
+        // Add a default user login
+        const defaultUser = { username: 'user', password: 'password' };
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+        if (!registeredUsers.find(user => user.username === defaultUser.username)) {
+            registeredUsers.push(defaultUser);
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+        }
     </script>
 </body>
 </html>
