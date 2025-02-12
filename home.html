@@ -273,6 +273,16 @@
         .feedback button:hover {
             background-color: darkgreen;
         }
+        .feedback-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            width: 80%;
+        }
     </style>
 </head>
 <body>
@@ -350,6 +360,7 @@
                 </div>
                 <textarea id="feedbackText" placeholder="Provide your feedback here..."></textarea>
                 <button onclick="submitFeedback()">Submit Feedback</button>
+                <div id="feedbackTilesContainer"></div>
             </div>
             <button id="startScanButton" class="scan-button" onclick="showSubjectSelection()">Find a Study Partner</button>
         </div>
@@ -484,14 +495,6 @@
 
         function submitFeedback() {
             const feedbackText = document.getElementById('feedbackText').value;
-            console.log('Rating:', rating);
-            console.log('Feedback:', feedbackText);
-            alert('Feedback submitted. Thank you!');
-            showSubjectSelection(); // Redirect to subject selection after feedback
-        }
-
-        function saveFeedbacks() {
-            const feedbackText = document.getElementById('feedbackText').value;
             const feedbackData = {
                 rating: rating,
                 feedback: feedbackText,
@@ -502,6 +505,24 @@
             feedbacks.push(feedbackData);
             localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
 
+            // Add feedback tile
+            const feedbackTilesContainer = document.getElementById('feedbackTilesContainer');
+            const feedbackTile = document.createElement('div');
+            feedbackTile.classList.add('feedback-tile');
+            feedbackTile.innerHTML = `
+                <p><strong>Rating:</strong> ${feedbackData.rating} &#9733;</p>
+                <p><strong>Feedback:</strong> ${feedbackData.feedback}</p>
+                <p><strong>Timestamp:</strong> ${feedbackData.timestamp}</p>
+            `;
+            feedbackTilesContainer.appendChild(feedbackTile);
+
+            alert('Feedback submitted. Thank you!');
+            showSubjectSelection(); // Redirect to subject selection after feedback
+        }
+
+        function saveFeedbacks() {
+            const feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+            console.log('Saved Feedbacks:', feedbacks);
             alert('Feedbacks saved successfully!');
         }
     </script>
