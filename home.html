@@ -178,6 +178,29 @@
         .nav-buttons button:hover {
             background-color: #ddd;
         }
+        .scanner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .scanner .circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 4px solid green;
+            animation: scan 2s infinite;
+        }
+        @keyframes scan {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -225,6 +248,9 @@
                     <textarea id="reportReason" name="reportReason" placeholder="Reason for Report" required></textarea>
                     <button type="submit">Submit Report</button>
                 </form>
+            </div>
+            <div id="scanner" class="scanner" style="display: none;">
+                <div class="circle"></div>
             </div>
         </div>
     </div>
@@ -318,6 +344,17 @@
                 chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
             }
         }
+
+        function startScanning() {
+            showSection('scanner');
+            setTimeout(() => {
+                showSection('paired');
+                alert('Match found!');
+            }, 5000); // Simulate 5 seconds of scanning
+        }
+
+        // Start scanning when the page loads
+        document.addEventListener('DOMContentLoaded', startScanning);
     </script>
 
 </body>
