@@ -63,14 +63,14 @@
             padding: 20px;
             overflow-y: auto;
         }
-        .chatbox, .inbox, .report {
+        .paired, .inbox, .report {
             background-color: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
-        .chatbox textarea {
+        .paired textarea {
             width: 100%;
             height: 100px;
             padding: 10px;
@@ -135,14 +135,14 @@
 
     <div class="main">
         <div class="sidebar">
-            <button onclick="showSection('chatbox')">Chatbox</button>
+            <button onclick="showSection('paired')">Partner</button>
             <button onclick="showSection('inbox')">Inbox</button>
             <button onclick="showSection('report')">Report</button>
         </div>
 
         <div class="content">
-            <div id="chatbox" class="chatbox">
-                <h2>Chatbox</h2>
+            <div id="paired" class="paired">
+                <h2>paired</h2>
                 <textarea placeholder="Type your message here..."></textarea>
             </div>
             <div id="inbox" class="inbox" style="display: none;">
