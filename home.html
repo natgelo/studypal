@@ -201,6 +201,19 @@
                 opacity: 0;
             }
         }
+        .scan-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: center;
+        }
+        .scan-button:hover {
+            background-color: darkgreen;
+        }
     </style>
 </head>
 <body>
@@ -252,6 +265,7 @@
             <div id="scanner" class="scanner" style="display: none;">
                 <div class="circle"></div>
             </div>
+            <button id="startScanButton" class="scan-button" onclick="startScanning()">Find a Study Partner</button>
         </div>
     </div>
 
@@ -352,9 +366,6 @@
                 alert('Match found!');
             }, 5000); // Simulate 5 seconds of scanning
         }
-
-        // Start scanning when the page loads
-        document.addEventListener('DOMContentLoaded', startScanning);
     </script>
 
 </body>
