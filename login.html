@@ -118,7 +118,8 @@
             const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
             const user = registeredUsers.find(user => user.username === username && user.password === password);
 
-            if (user || (username === 'admin' && password === 'admin1311177')) {
+            if (user || (username === 'admin' && password === 'password')) {
+            if (user || (username === 'user' && password === 'password')) {
                 // Save current user to local storage
                 localStorage.setItem('currentUser', JSON.stringify({ username, password }));
 
@@ -129,12 +130,14 @@
                 localStorage.setItem('loginLogs', JSON.stringify(loginLogs));
 
                 alert('Login successful!');
-                if (username === 'admin' && password === 'admin1311177') {
+                if (username === 'admin' && password === 'password') {
                     window.location.href = 'admin.html'; // Redirect to admin page
+                } else if (username === 'user' && password === 'password') {
+                    window.location.href = 'home.html'; // Redirect to home page
                 } else if (loginButton === 'Login as Student') {
                     window.location.href = 'home.html'; // Redirect to home page for students
                 } else if (loginButton === 'Login as Mentee') {
-                    window.location.href = 'mentee.html'; // Redirect to home page for mentees (you need to create this page)
+                    window.location.href = 'mentee.html'; // Redirect to home page for mentees
                 }
             } else {
                 alert('Invalid username or password.');
