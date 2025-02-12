@@ -58,6 +58,9 @@
         .sidebar button:hover {
             background-color: #ddd;
         }
+        .sidebar #saveFeedbackButton {
+            margin-top: 20px;
+        }
         .content {
             flex: 1;
             padding: 20px;
@@ -289,6 +292,7 @@
             <button onclick="showSection('paired')">Partner</button>
             <button onclick="showSection('inbox')">Inbox</button>
             <button onclick="showSection('report')">Report</button>
+            <button id="saveFeedbackButton" onclick="saveFeedbacks()">Save Feedbacks</button>
         </div>
 
         <div class="content">
@@ -484,6 +488,21 @@
             console.log('Feedback:', feedbackText);
             alert('Feedback submitted. Thank you!');
             showSubjectSelection(); // Redirect to subject selection after feedback
+        }
+
+        function saveFeedbacks() {
+            const feedbackText = document.getElementById('feedbackText').value;
+            const feedbackData = {
+                rating: rating,
+                feedback: feedbackText,
+                timestamp: new Date().toLocaleString()
+            };
+
+            let feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+            feedbacks.push(feedbackData);
+            localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+
+            alert('Feedbacks saved successfully!');
         }
     </script>
 
