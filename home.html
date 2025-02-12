@@ -214,6 +214,29 @@
         .scan-button:hover {
             background-color: darkgreen;
         }
+        .subject-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .subject-selection select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .subject-selection button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .subject-selection button:hover {
+            background-color: darkgreen;
+        }
     </style>
 </head>
 <body>
@@ -245,6 +268,10 @@
                     <label for="chatFileInput">Attach Photo</label>
                     <button onclick="sendMessage()">Send</button>
                 </div>
+                <div class="chat-actions">
+                    <button onclick="endConversation()">End Conversation</button>
+                    <button onclick="findNewPartner()">Find New Partner</button>
+                </div>
             </div>
             <div id="inbox" class="inbox" style="display: none;">
                 <h2>Inbox</h2>
@@ -265,7 +292,18 @@
             <div id="scanner" class="scanner" style="display: none;">
                 <div class="circle"></div>
             </div>
-            <button id="startScanButton" class="scan-button" onclick="startScanning()">Find a Study Partner</button>
+            <div id="subjectSelection" class="subject-selection" style="display: none;">
+                <select id="subjectSelect">
+                    <option value="Physics">Physics</option>
+                    <option value="Biology">Biology</option>
+                    <option value="UCSP">UCSP</option>
+                    <option value="PEH">PEH</option>
+                    <option value="Filipino">Filipino</option>
+                    <option value="Literature">Literature</option>
+                </select>
+                <button onclick="startScanning()">Start Scanning</button>
+            </div>
+            <button id="startScanButton" class="scan-button" onclick="showSubjectSelection()">Find a Study Partner</button>
         </div>
     </div>
 
@@ -359,12 +397,31 @@
             }
         }
 
+        function showSubjectSelection() {
+            document.getElementById('startScanButton').style.display = 'none';
+            document.getElementById('subjectSelection').style.display = 'flex';
+        }
+
         function startScanning() {
+            const selectedSubject = document.getElementById('subjectSelect').value;
+            console.log('Selected Subject:', selectedSubject); // You can use the selected subject for matching logic
+
             showSection('scanner');
             setTimeout(() => {
                 showSection('paired');
-                alert('Match found!');
+                alert('Match found for ' + selectedSubject + '!');
             }, 5000); // Simulate 5 seconds of scanning
+        }
+
+        function endConversation() {
+            const chatMessages = document.getElementById('chatMessages');
+            chatMessages.innerHTML = ''; // Clear the chat messages
+            alert('Conversation ended.');
+        }
+
+        function findNewPartner() {
+            endConversation();
+            showSubjectSelection();
         }
     </script>
 
