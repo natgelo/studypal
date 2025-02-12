@@ -237,6 +237,39 @@
         .subject-selection button:hover {
             background-color: darkgreen;
         }
+        .feedback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .feedback .stars {
+            display: flex;
+        }
+        .feedback .stars span {
+            font-size: 2rem;
+            color: gold;
+            cursor: pointer;
+        }
+        .feedback textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+            width: 80%;
+        }
+        .feedback button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: green;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .feedback button:hover {
+            background-color: darkgreen;
+        }
     </style>
 </head>
 <body>
@@ -303,11 +336,24 @@
                 </select>
                 <button onclick="startScanning()">Start Scanning</button>
             </div>
+            <div id="feedback" class="feedback" style="display: none;">
+                <div class="stars">
+                    <span onclick="rate(1)">&#9733;</span>
+                    <span onclick="rate(2)">&#9733;</span>
+                    <span onclick="rate(3)">&#9733;</span>
+                    <span onclick="rate(4)">&#9733;</span>
+                    <span onclick="rate(5)">&#9733;</span>
+                </div>
+                <textarea id="feedbackText" placeholder="Provide your feedback here..."></textarea>
+                <button onclick="submitFeedback()">Submit Feedback</button>
+            </div>
             <button id="startScanButton" class="scan-button" onclick="showSubjectSelection()">Find a Study Partner</button>
         </div>
     </div>
 
     <script>
+        let rating = 0;
+
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.content > div');
             sections.forEach(section => {
@@ -416,12 +462,28 @@
         function endConversation() {
             const chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = ''; // Clear the chat messages
-            alert('Conversation ended.');
+            showSection('feedback');
         }
 
         function findNewPartner() {
             endConversation();
             showSubjectSelection();
+        }
+
+        function rate(stars) {
+            rating = stars;
+            const starElements = document.querySelectorAll('.feedback .stars span');
+            starElements.forEach((star, index) => {
+                star.style.color = index < stars ? 'gold' : 'gray';
+            });
+        }
+
+        function submitFeedback() {
+            const feedbackText = document.getElementById('feedbackText').value;
+            console.log('Rating:', rating);
+            console.log('Feedback:', feedbackText);
+            alert('Feedback submitted. Thank you!');
+            showSubjectSelection(); // Redirect to subject selection after feedback
         }
     </script>
 
