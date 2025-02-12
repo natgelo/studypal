@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Pal</title>
+    <title>Study Pal - Home</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -62,102 +62,27 @@
             flex: 1;
             padding: 20px;
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
         }
-        .chat-messages {
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-        .chat-message {
+        .survey-section {
             background-color: white;
-            padding: 10px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .survey-section h2 {
+            margin-top: 0;
+        }
+        .survey-section .question {
             margin-bottom: 10px;
-            width: fit-content;
-            max-width: 80%;
-            position: relative;
         }
-        .chat-message.sent {
-            align-self: flex-start;
-        }
-        .chat-message img {
-            max-width: 100%;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-        .chat-message .unsend {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            padding: 2px 5px;
-            font-size: 12px;
-        }
-        .chat-input {
-            display: flex;
-            gap: 10px;
-        }
-        .chat-input textarea {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            height: 50px;
-            resize: none;
-        }
-        .chat-input input[type="file"] {
-            display: none;
-        }
-        .chat-input label {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: green;
-            color: white;
+        .survey-section label {
+            display: block;
+            margin-bottom: 5px;
             font-weight: bold;
-            cursor: pointer;
         }
-        .chat-input button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: green;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .chat-input button:hover, .chat-input label:hover {
-            background-color: darkgreen;
-        }
-        .inbox form, .report form {
-            display: flex;
-            flex-direction: column;
-        }
-        .inbox input, .report input, .inbox textarea, .report textarea {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            width: 100%;
-        }
-        .inbox button, .report button {
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            background-color: green;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .inbox button:hover, .report button:hover {
-            background-color: darkgreen;
+        .survey-section input[type="radio"] {
+            margin-right: 10px;
         }
         .nav-buttons {
             display: flex;
@@ -194,131 +119,103 @@
 
     <div class="main">
         <div class="sidebar">
-            <button onclick="showSection('paired')">Partner</button>
-            <button onclick="showSection('inbox')">Inbox</button>
-            <button onclick="showSection('report')">Report</button>
+            <button onclick="window.location.href='paired.html'">Partner</button>
+            <button onclick="window.location.href='inbox.html'">Inbox</button>
+            <button onclick="window.location.href='report.html'">Report</button>
         </div>
 
         <div class="content">
-            <div id="paired" class="paired">
-                <h2>Chat</h2>
-                <div class="chat-messages" id="chatMessages"></div>
-                <div class="chat-input">
-                    <textarea id="chatInput" placeholder="Type your message here..."></textarea>
-                    <input type="file" id="chatFileInput" accept="image/*">
-                    <label for="chatFileInput">Attach Photo</label>
-                    <button onclick="sendMessage()">Send</button>
+            <!-- Pairing Algorithm (PA) Survey Section -->
+            <div class="survey-section">
+                <h2>Pairing Algorithm (PA)</h2>
+                <div class="question">
+                    <label>The pairing algorithm matches me with relevant and compatible partners.</label>
+                    <input type="radio" name="pa1" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pa1" value="agree"> Agree
+                    <input type="radio" name="pa1" value="neutral"> Neutral
+                    <input type="radio" name="pa1" value="disagree"> Disagree
+                    <input type="radio" name="pa1" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>The algorithm finds matches in a timely manner.</label>
+                    <input type="radio" name="pa2" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pa2" value="agree"> Agree
+                    <input type="radio" name="pa2" value="neutral"> Neutral
+                    <input type="radio" name="pa2" value="disagree"> Disagree
+                    <input type="radio" name="pa2" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>The algorithm adjusts its recommendations based on my previous interactions.</label>
+                    <input type="radio" name="pa3" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pa3" value="agree"> Agree
+                    <input type="radio" name="pa3" value="neutral"> Neutral
+                    <input type="radio" name="pa3" value="disagree"> Disagree
+                    <input type="radio" name="pa3" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>I understand the criteria the algorithm uses to make matches.</label>
+                    <input type="radio" name="pa4" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pa4" value="agree"> Agree
+                    <input type="radio" name="pa4" value="neutral"> Neutral
+                    <input type="radio" name="pa4" value="disagree"> Disagree
+                    <input type="radio" name="pa4" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>I am satisfied with the quality of matches provided by the algorithm.</label>
+                    <input type="radio" name="pa5" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pa5" value="agree"> Agree
+                    <input type="radio" name="pa5" value="neutral"> Neutral
+                    <input type="radio" name="pa5" value="disagree"> Disagree
+                    <input type="radio" name="pa5" value="strongly_disagree"> Strongly Disagree
                 </div>
             </div>
-            <div id="inbox" class="inbox" style="display: none;">
-                <h2>Inbox</h2>
-                <form id="sendMessageForm">
-                    <input type="text" id="recipientId" name="recipientId" placeholder="Recipient ID" required>
-                    <textarea id="messageContent" name="messageContent" placeholder="Type your message here..." required></textarea>
-                    <button type="submit">Send Message</button>
-                </form>
-            </div>
-            <div id="report" class="report" style="display: none;">
-                <h2>Report User</h2>
-                <form id="reportForm">
-                    <input type="text" id="reportUserId" name="reportUserId" placeholder="User ID to Report" required>
-                    <textarea id="reportReason" name="reportReason" placeholder="Reason for Report" required></textarea>
-                    <button type="submit">Submit Report</button>
-                </form>
+
+            <!-- Post Match Feedback (PMF) Survey Section -->
+            <div class="survey-section">
+                <h2>Post Match Feedback (PMF)</h2>
+                <div class="question">
+                    <label>I find it easy to provide feedback after a match.</label>
+                    <input type="radio" name="pmf1" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pmf1" value="agree"> Agree
+                    <input type="radio" name="pmf1" value="neutral"> Neutral
+                    <input type="radio" name="pmf1" value="disagree"> Disagree
+                    <input type="radio" name="pmf1" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>The feedback options provided are relevant and comprehensive.</label>
+                    <input type="radio" name="pmf2" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pmf2" value="agree"> Agree
+                    <input type="radio" name="pmf2" value="neutral"> Neutral
+                    <input type="radio" name="pmf2" value="disagree"> Disagree
+                    <input type="radio" name="pmf2" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>I believe my feedback is used to improve future matches.</label>
+                    <input type="radio" name="pmf3" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pmf3" value="agree"> Agree
+                    <input type="radio" name="pmf3" value="neutral"> Neutral
+                    <input type="radio" name="pmf3" value="disagree"> Disagree
+                    <input type="radio" name="pmf3" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>I feel comfortable providing feedback because it is anonymous.</label>
+                    <input type="radio" name="pmf4" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pmf4" value="agree"> Agree
+                    <input type="radio" name="pmf4" value="neutral"> Neutral
+                    <input type="radio" name="pmf4" value="disagree"> Disagree
+                    <input type="radio" name="pmf4" value="strongly_disagree"> Strongly Disagree
+                </div>
+                <div class="question">
+                    <label>The feedback I receive from others after a match is helpful for my self-improvement.</label>
+                    <input type="radio" name="pmf5" value="strongly_agree"> Strongly Agree
+                    <input type="radio" name="pmf5" value="agree"> Agree
+                    <input type="radio" name="pmf5" value="neutral"> Neutral
+                    <input type="radio" name="pmf5" value="disagree"> Disagree
+                    <input type="radio" name="pmf5" value="strongly_disagree"> Strongly Disagree
+                </div>
             </div>
         </div>
     </div>
-
-    <script>
-        function showSection(sectionId) {
-            const sections = document.querySelectorAll('.content > div');
-            sections.forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById(sectionId).style.display = 'block';
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const logo = document.getElementById('logo');
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-            if (currentUser && currentUser.photo) {
-                logo.src = currentUser.photo;
-            }
-
-            const sendMessageForm = document.getElementById('sendMessageForm');
-            sendMessageForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                const recipientId = document.getElementById('recipientId').value;
-                const messageContent = document.getElementById('messageContent').value;
-
-                let inboxMessages = JSON.parse(localStorage.getItem('inboxMessages')) || [];
-                inboxMessages.push({ senderId: currentUser.id, recipientId, messageContent, timestamp: new Date().toLocaleString() });
-                localStorage.setItem('inboxMessages', JSON.stringify(inboxMessages));
-
-                alert('Message sent successfully!');
-                sendMessageForm.reset();
-            });
-
-            const reportForm = document.getElementById('reportForm');
-            reportForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                const reportUserId = document.getElementById('reportUserId').value;
-                const reportReason = document.getElementById('reportReason').value;
-
-                let reports = JSON.parse(localStorage.getItem('reports')) || [];
-                reports.push({ reporterId: currentUser.id, reportUserId, reportReason, timestamp: new Date().toLocaleString() });
-                localStorage.setItem('reports', JSON.stringify(reports));
-
-                alert('Report submitted successfully!');
-                reportForm.reset();
-            });
-        });
-
-        function sendMessage() {
-            const chatInput = document.getElementById('chatInput');
-            const chatMessages = document.getElementById('chatMessages');
-            const chatFileInput = document.getElementById('chatFileInput');
-            const messageContent = chatInput.value;
-
-            if (messageContent.trim() !== '' || chatFileInput.files.length > 0) {
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('chat-message', 'sent');
-
-                if (messageContent.trim() !== '') {
-                    messageElement.textContent = messageContent;
-                }
-
-                if (chatFileInput.files.length > 0) {
-                    const file = chatFileInput.files[0];
-                    const reader = new FileReader();
-
-                    reader.onload = function(e) {
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        messageElement.appendChild(img);
-                    };
-
-                    reader.readAsDataURL(file);
-                }
-
-                const unsendButton = document.createElement('button');
-                unsendButton.classList.add('unsend');
-                unsendButton.textContent = 'Unsend';
-                unsendButton.onclick = function() {
-                    chatMessages.removeChild(messageElement);
-                };
-
-                messageElement.appendChild(unsendButton);
-                chatMessages.appendChild(messageElement);
-                chatInput.value = '';
-                chatFileInput.value = '';
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
-            }
-        }
-    </script>
 
 </body>
 </html>
