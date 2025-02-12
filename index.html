@@ -118,8 +118,7 @@
             const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
             const user = registeredUsers.find(user => user.username === username && user.password === password);
 
-            if (user || (username === 'user' && password === 'password')) {
-            else if (user || (username === 'admin' && password === 'password')) {
+            if (user || (username === 'user' && password === 'password') || (username === 'admin' && password === 'admin123')) {
                 // Save current user to local storage
                 localStorage.setItem('currentUser', JSON.stringify({ username, password }));
 
@@ -131,8 +130,8 @@
 
                 alert('Login successful!');
                 if (username === 'user' && password === 'password') {
-                    window.location.href = 'home.html'; // Redirect to home page
-                }  else if (username === 'admin' && password === 'password') {
+                    window.location.href = 'home.html'; // Redirect to home page for default user
+                } else if (username === 'admin' && password === 'admin123') {
                     window.location.href = 'admin.html'; // Redirect to admin page
                 } else if (loginButton === 'Login as Student') {
                     window.location.href = 'home.html'; // Redirect to home page for students
@@ -144,14 +143,19 @@
             }
         });
 
-        // Add a default user login
-        const defaultUser = { username: 'user', password: 'password' };
-        const defaultUser = { username: 'admin', password: 'password' };
+        // Add default user logins
+        const defaultUsers = [
+            { username: 'user', password: 'password' },
+            { username: 'admin', password: 'admin123' }
+        ];
+
         let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-        if (!registeredUsers.find(user => user.username === defaultUser.username)) {
-            registeredUsers.push(defaultUser);
-            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
-        }
+        defaultUsers.forEach(defaultUser => {
+            if (!registeredUsers.find(user => user.username === defaultUser.username)) {
+                registeredUsers.push(defaultUser);
+            }
+        });
+        localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
     </script>
 </body>
 </html>
