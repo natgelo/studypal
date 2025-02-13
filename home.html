@@ -303,7 +303,6 @@
             <button onclick="showSection('paired')">Partner</button>
             <button onclick="showSection('inbox')">Inbox</button>
             <button onclick="showSection('report')">Report</button>
-            <button id="saveFeedbackButton" onclick="saveFeedbacks()">Save Feedbacks</button>
         </div>
 
         <div class="content">
@@ -318,7 +317,6 @@
                 </div>
                 <div class="chat-actions">
                     <button onclick="endConversation()">End Conversation</button>
-                    <button onclick="findNewPartner()">Find New Partner</button>
                 </div>
             </div>
             <div id="inbox" class="inbox" style="display: none;">
@@ -348,6 +346,8 @@
                     <option value="PEH">PEH</option>
                     <option value="Filipino">Filipino</option>
                     <option value="Literature">Literature</option>
+                    <option value="Entrepreneurship">Entrepreneurship</option>
+                    <option value="Capstone">Capstone</option>
                 </select>
                 <button onclick="startScanning()">Start Scanning</button>
             </div>
@@ -356,14 +356,11 @@
                     <span onclick="rate(1)">&#9733;</span>
                     <span onclick="rate(2)">&#9733;</span>
                     <span onclick="rate(3)">&#9733;</span>
-                    <span onclick="rate(4)">&#9733;</span>
-                    <span onclick="rate(5)">&#9733;</span>
                 </div>
                 <textarea id="feedbackText" placeholder="Provide your feedback here..."></textarea>
                 <button onclick="submitFeedback()">Submit Feedback</button>
                 <div id="feedbackTilesContainer"></div>
             </div>
-            <button id="startScanButton" class="scan-button" onclick="showSubjectSelection()">Find a Study Partner</button>
         </div>
     </div>
 
@@ -460,7 +457,6 @@
         }
 
         function showSubjectSelection() {
-            document.getElementById('startScanButton').style.display = 'none';
             document.getElementById('subjectSelection').style.display = 'flex';
         }
 
