@@ -292,11 +292,11 @@
         <h1>Study PAL : Peer-Assisted Learning</h1>
     </div>
     
-<div class="nav-buttons">
-    <button onclick="window.location.href='profile.html'">Profile</button>
-    <button onclick="showSubjectSelection()">Find Partner</button>
-    <button onclick="window.location.href='login.html'">Sign Out</button>
-</div>
+    <div class="nav-buttons">
+        <button onclick="window.location.href='profile.html'">Profile</button>
+        <button onclick="showSubjectSelection()">Find Partner</button>
+        <button onclick="window.location.href='login.html'">Sign Out</button>
+    </div>
 
     <div class="main">
         <div class="sidebar">
@@ -453,7 +453,26 @@
                 chatInput.value = '';
                 chatFileInput.value = '';
                 chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+
+                // Auto-response bot logic
+                setTimeout(() => {
+                    const botMessageElement = document.createElement('div');
+                    botMessageElement.classList.add('chat-message', 'sent');
+                    botMessageElement.textContent = getBotResponse(messageContent);
+                    chatMessages.appendChild(botMessageElement);
+                    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+                }, 1000); // Simulate a 1-second delay for the bot response
             }
+        }
+
+        function getBotResponse(message) {
+            const responses = {
+                'hello': 'Hi there! How can I help you today?',
+                'how are you': 'I am just a bot, but I am here to assist you!',
+                'bye': 'Goodbye! Have a great day!'
+            };
+            const lowerCaseMessage = message.toLowerCase();
+            return responses[lowerCaseMessage] || 'Sorry, I did not understand that. Can you please rephrase?';
         }
 
         function showSubjectSelection() {
