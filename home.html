@@ -116,7 +116,7 @@
             border-radius: 4px;
             height: 50px;
             resize: none;
-            text-transform: none; /* Ensure text is not transformed */
+            text-transform: none; 
         }
         .chat-input input[type="file"] {
             display: none;
@@ -179,7 +179,7 @@
             background-color: white;
             color: green;
             font-weight: bold;
-            cursor: pointer.
+            cursor: pointer;
         }
         .nav-buttons button:hover {
             background-color: #ddd;
@@ -215,7 +215,7 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-            align-self: center.
+            align-self: center;
         }
         .scan-button:hover {
             background-color: darkgreen;
@@ -223,13 +223,13 @@
         .subject-selection {
             display: flex;
             flex-direction: column;
-            align-items: center.
+            align-items: center;
         }
         .subject-selection select {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            margin-bottom: 10px.
+            margin-bottom: 10px;
         }
         .subject-selection button {
             padding: 10px 20px;
@@ -238,30 +238,30 @@
             background-color: green;
             color: white;
             font-weight: bold;
-            cursor: pointer.
+            cursor: pointer;
         }
         .subject-selection button:hover {
-            background-color: darkgreen.
+            background-color: darkgreen;
         }
         .feedback {
             display: flex;
             flex-direction: column;
-            align-items: center.
+            align-items: center;
         }
         .feedback .stars {
-            display: flex.
+            display: flex;
         }
         .feedback .stars span {
             font-size: 2rem;
             color: gold;
-            cursor: pointer.
+            cursor: pointer;
         }
         .feedback textarea {
-            padding: 10px.
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             margin-top: 10px;
-            width: 80%.
+            width: 80%;
         }
         .feedback button {
             padding: 10px 20px;
@@ -271,20 +271,20 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px.
+            margin-top: 10px;
         }
         .feedback button:hover {
-            background-color: darkgreen.
+            background-color: darkgreen;
         }
         .feedback-tile {
             display: flex;
             flex-direction: column;
-            align-items: center.
+            align-items: center;
             border: 1px solid #ccc;
             border-radius: 4px;
             padding: 10px;
             margin-top: 10px;
-            width: 80%.
+            width: 80%;
         }
     </style>
 </head>
@@ -524,7 +524,6 @@
             feedbacks.push(feedbackData);
             localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
 
-            // Add feedback tile
             const feedbackTilesContainer = document.getElementById('feedbackTilesContainer');
             const feedbackTile = document.createElement('div');
             feedbackTile.classList.add('feedback-tile');
@@ -536,7 +535,7 @@
             feedbackTilesContainer.appendChild(feedbackTile);
 
             alert('Feedback submitted. Thank you!');
-            showSubjectSelection(); // Redirect to subject selection after feedback
+            showSubjectSelection();
         }
 
         function saveFeedbacks() {
