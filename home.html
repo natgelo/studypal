@@ -82,9 +82,13 @@
             width: fit-content;
             max-width: 80%;
             position: relative;
+            display: flex;
+            align-items: center;
         }
         .chat-message.sent {
             align-self: flex-start;
+            display: flex;
+            justify-content: space-between;
         }
         .chat-message img {
             max-width: 100%;
@@ -92,9 +96,6 @@
             margin-top: 10px;
         }
         .chat-message .unsend {
-            position: absolute;
-            top: 5px;
-            right: 5px;
             background-color: red;
             color: white;
             border: none;
@@ -102,6 +103,7 @@
             cursor: pointer;
             padding: 2px 5px;
             font-size: 12px;
+            margin-left: 10px;
         }
         .chat-input {
             display: flex;
