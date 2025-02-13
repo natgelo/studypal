@@ -116,6 +116,7 @@
             border-radius: 4px;
             height: 50px;
             resize: none;
+            text-transform: none; /* Ensure text is not transformed */
         }
         .chat-input input[type="file"] {
             display: none;
@@ -178,7 +179,7 @@
             background-color: white;
             color: green;
             font-weight: bold;
-            cursor: pointer;
+            cursor: pointer.
         }
         .nav-buttons button:hover {
             background-color: #ddd;
@@ -214,7 +215,7 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-            align-self: center;
+            align-self: center.
         }
         .scan-button:hover {
             background-color: darkgreen;
@@ -222,13 +223,13 @@
         .subject-selection {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center.
         }
         .subject-selection select {
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            margin-bottom: 10px;
+            margin-bottom: 10px.
         }
         .subject-selection button {
             padding: 10px 20px;
@@ -237,30 +238,30 @@
             background-color: green;
             color: white;
             font-weight: bold;
-            cursor: pointer;
+            cursor: pointer.
         }
         .subject-selection button:hover {
-            background-color: darkgreen;
+            background-color: darkgreen.
         }
         .feedback {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center.
         }
         .feedback .stars {
-            display: flex;
+            display: flex.
         }
         .feedback .stars span {
             font-size: 2rem;
             color: gold;
-            cursor: pointer;
+            cursor: pointer.
         }
         .feedback textarea {
-            padding: 10px;
+            padding: 10px.
             border: 1px solid #ccc;
             border-radius: 4px;
             margin-top: 10px;
-            width: 80%;
+            width: 80%.
         }
         .feedback button {
             padding: 10px 20px;
@@ -270,20 +271,20 @@
             color: white;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 10px.
         }
         .feedback button:hover {
-            background-color: darkgreen;
+            background-color: darkgreen.
         }
         .feedback-tile {
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: center.
             border: 1px solid #ccc;
             border-radius: 4px;
             padding: 10px;
             margin-top: 10px;
-            width: 80%;
+            width: 80%.
         }
     </style>
 </head>
@@ -454,23 +455,23 @@
                 chatMessages.appendChild(messageElement);
                 chatInput.value = '';
                 chatFileInput.value = '';
-                chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                // Auto-response bot logic
                 setTimeout(() => {
                     const botMessageElement = document.createElement('div');
                     botMessageElement.classList.add('chat-message', 'sent');
                     botMessageElement.textContent = getBotResponse(messageContent);
                     chatMessages.appendChild(botMessageElement);
-                    chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
-                }, 1000); // Simulate a 1-second delay for the bot response
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1000); 
             }
         }
 
         function getBotResponse(message) {
             const responses = {
+                'hi': 'hello there! How can I help you today?',
                 'hello': 'Hi there! How can I help you today?',
-                'how are you': 'I am just a bot, but I am here to assist you!',
+                'how are you?': 'I am just a bot, but I am here to assist you!',
                 'bye': 'Goodbye! Have a great day!'
             };
             const lowerCaseMessage = message.toLowerCase();
@@ -483,18 +484,18 @@
 
         function startScanning() {
             const selectedSubject = document.getElementById('subjectSelect').value;
-            console.log('Selected Subject:', selectedSubject); // You can use the selected subject for matching logic
+            console.log('Selected Subject:', selectedSubject);
 
             showSection('scanner');
             setTimeout(() => {
                 showSection('paired');
                 alert('Match found for ' + selectedSubject + '!');
-            }, 5000); // Simulate 5 seconds of scanning
+            }, 5000); 
         }
 
         function endConversation() {
             const chatMessages = document.getElementById('chatMessages');
-            chatMessages.innerHTML = ''; // Clear the chat messages
+            chatMessages.innerHTML = ''; 
             showSection('feedback');
         }
 
